@@ -5,7 +5,10 @@ import {
   web3Loaded,
   web3AccountLoaded,
   tokenLoaded,
-  exchangeLoaded
+  exchangeLoaded,
+  cancelledOrdersLoaded,
+  filledOrdersLoaded,
+  allOrdersLoaded
 } from './actions'
 
 export const loadWeb3 = (dispatch) => {
@@ -41,4 +44,27 @@ export const loadExchange = async (web3, networkId, dispatch) => {
     console.log('Exchange is not deployed to the current network. Please select another network with Metamask.')
     return null
   }
+}
+
+export const loadAllOrders = async (exchange, dispatch) => {
+  // Fetch Cancelled order
+  const cancelStream = await exchange.getPastEvents('Cancel', { fromBlock: 0, toBlock: 'latest' })
+  // Format cancelled orders
+  const cancelledOrders = cancelStream.map((event) => event.returnValues)
+  // Add cancelled orders to the redux store
+  dispatch(cancelledOrdersLoaded(cancelledOrders))
+
+  // Fetch filled orders with the "Trade" event cancelStream
+  const tradeStream = await exchange.getPastEvents('Trade', { fromBlock: 0, toBlock: 'latest' })
+  // Format Filled orders
+  const filledOrders = tradeStream.map((event) => event.returnValues)
+  // Add cancelled orders to the redux store
+  dispatch(filledOrdersLoaded(filledOrders))
+
+  // Load order stream
+  const orderStream = await exchange.getPastEvents('Order', { fromBlock: 0, toBlock: 'latest' })
+  // Format Orders Stream
+  const allOrders = orderStream.map((event) => event.returnValues)
+  // Add cancelled orders to the redux store
+  dispatch(allOrdersLoaded(allOrders))
 }

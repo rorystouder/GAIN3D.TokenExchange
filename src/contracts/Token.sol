@@ -51,16 +51,4 @@ contract Token{
     return true;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
 }
