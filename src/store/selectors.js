@@ -67,7 +67,7 @@ const decorateOrder = (order) => {
   let etherAmount
   let tokenAmount
 
-  if(order.tokenGive == ETHER_ADDRESS) {
+  if(order.tokenGive === ETHER_ADDRESS) {
     etherAmount = order.amountGive
     tokenAmount = order.amountGet
   } else {
@@ -301,6 +301,6 @@ const buildGraphData = (orders) => {
       y: [open.tokenPrice, high.tokenPrice, low.tokenPrice, close.tokenPrice]
     })
   })
-  
+
   return graphData
 }
