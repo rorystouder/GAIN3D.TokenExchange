@@ -9,7 +9,8 @@ import {
   cancelledOrdersLoaded,
   filledOrdersLoaded,
   allOrdersLoaded,
-  orderCancelling
+  orderCancelling,
+  orderCancelled
 } from './actions'
 
 export const loadWeb3 = (dispatch) => {
@@ -78,5 +79,11 @@ export const cancelOrder = (dispatch, exchange, order, account) => {
   .on('error', (error) => {
     console.log(error)
     window.alert('There was an error cancelling the order!')
+  })
+}
+
+export const subscribeToEvents = async (exchange, dispatch) => {
+  exchange.events.Cancel({}, (error, event) => {
+    dispatch(orderCancelled(event.returnValues))
   })
 }

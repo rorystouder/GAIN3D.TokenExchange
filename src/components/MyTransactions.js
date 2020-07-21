@@ -7,6 +7,9 @@ import {
   myFilledOrdersSelector,
   myOpenOrdersLoadedSelector,
   myOpenOrdersSelector,
+  exchangeSelector,
+  accountSelector,
+  orderCancellingSelector
 } from '../store/selectors'
 import { cancelOrder } from '../store/interactions'
 
@@ -29,7 +32,7 @@ const showMyFilledOrders = (props) => {
 }
 
 const showMyOpenOrders = (props) => {
-  const { myOpenOrders, dispatch } = props
+  const { myOpenOrders, dispatch, exchange, account } = props
 
   return(
     <tbody>
@@ -41,7 +44,7 @@ const showMyOpenOrders = (props) => {
             <td
               className="text-muted cancel-order"
               onClick={(e) => {
-                cancelOrder()
+                cancelOrder(dispatch, exchange, order, account)
               }}
               >X</td>
           </tr>
@@ -92,12 +95,16 @@ class MyTransactions extends Component {
 }
 
 function mapStateToProps(state) {
+  const myOpenOrdersLoaded = myOpenOrdersLoadedSelector(state)
+  const orderCancelling = orderCancellingSelector(state)
 
   return {
     myFilledOrders: myFilledOrdersSelector(state),
     showMyFilledOrders: myFilledOrdersLoadedSelector(state),
     myOpenOrders: myOpenOrdersSelector(state),
-    showMyOpenOrders: myOpenOrdersLoadedSelector(state)
+    showMyOpenOrders: myOpenOrdersLoaded && !orderCancelling,
+    exchange: exchangeSelector(state),
+    account: accountSelector(state)
   }
 }
 
