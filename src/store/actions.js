@@ -49,3 +49,10 @@ export function allOrdersLoaded(allOrders) {
     allOrders
   }
 }
+
+// Cancel Order
+export function orderCancelling() {
+  return {
+    type: 'ORDER_CANCELLING'
+  }
+}
