@@ -7,7 +7,6 @@ import {
   orderBookLoadedSelector,
   exchangeSelector,
   accountSelector,
-  orderFilling,
   orderFillingSelector
 } from '../store/selectors'
 import { fillOrder } from '../store/interactions'
