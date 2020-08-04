@@ -28,9 +28,9 @@ class Content extends Component {
         <div className="vertical-split">
           <Balance />
           <NewOrder />
-        </div>
-        <OrderBook />
-        <div className="vertical-split">
+          </div>
+            <OrderBook />
+          <div className="vertical-split">
           <PriceChart />
           <MyTransactions />
         </div>
