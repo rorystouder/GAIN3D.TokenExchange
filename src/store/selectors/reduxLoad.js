@@ -9,8 +9,6 @@ import {
   formatBalance
   } from '../helpers'
 
-
-
 const account = state => get(state, 'web3.account')
 export const accountSelector = createSelector(account, a => a)
 
